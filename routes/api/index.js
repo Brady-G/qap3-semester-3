@@ -1,5 +1,6 @@
+const express = require("express");
 const {getAllUsers} = require("../../services/users.dal");
-const router = require("express").Router();
+const router = express.Router();
 
 router.get("/", (req, res) => {
     getAllUsers()
@@ -8,5 +9,7 @@ router.get("/", (req, res) => {
         })
         .catch(() => res.status(500).send("Error"))
 })
+
+router.use('/user', require("./user"));
 
 module.exports = router
