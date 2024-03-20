@@ -11,5 +11,6 @@ router.get("/", (req, res) => {
 })
 
 router.use('/user', require("./user"));
+router.use('/projects', require("./project"));
 
 module.exports = router
