@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 require('dotenv').config();
 
 /**
+ * Checks if the current request is from an authorized user.
  *
  * @param req {Request}
  * @param res {Response}
