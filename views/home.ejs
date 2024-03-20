@@ -1,0 +1,15 @@
+<html lang="en">
+    <%- include('./partials/head.ejs') %>
+    <%- include('./partials/auth.ejs') %>
+    <body>
+        <%- include('./partials/nav.ejs') %>
+        <div>
+            <h3>Welcome Back, <span id="username">Unknown</span></h3>
+        </div>
+    </body>
+    <script>
+        // Gets the current user and displays their name
+        const user = getUser();
+        document.getElementById("username").textContent = user?.name || "Unknown";
+    </script>
+</html>

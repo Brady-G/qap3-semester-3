@@ -39,7 +39,7 @@ const getUserProjects = (user) => {
             } else if (!result) {
                 reject("No results found")
             } else {
-                resolve(result.rows[0]);
+                resolve(result.rows);
             }
         });
     });
