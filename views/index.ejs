@@ -1,0 +1,75 @@
+<html lang="en">
+    <%- include('./partials/head.ejs') %>
+    <body>
+        <% if (type === "login") { %>
+            <%- include('./partials/login.ejs') %>
+        <% } else if (type === "register") {%>
+            <%- include('./partials/register.ejs') %>
+        <% } else {%>
+            <h1>Unknown Page Type</h1>
+        <% } %>
+    </body>
+    <script>
+        const email = document.getElementById("email")
+        const password = document.getElementById("password")
+
+        const showError = (message) => {
+            const errorMessage = document.createElement("h1");
+            errorMessage.textContent = message;
+            document.body.innerHTML = "";
+            document.body.appendChild(errorMessage);
+        }
+    </script>
+    <% if (type === "login") { %>
+        <script>
+            const action = () => {
+                fetch("/api/user/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        email: email.value,
+                        password: password.value
+                    })
+                }).then(async res => {
+                    if (res.status === 200) {
+                        const data = await res.json();
+                        localStorage.setItem("token", data.token);
+                        window.open("/home", "_self")
+                    } else {
+                        showError("Failed to login try again")
+                    }
+                })
+                .catch(() => showError("Server error try again later."))
+            }
+        </script>
+    <% } else if (type === "register") {%>
+        <script>
+            const action = () => {
+                const username = document.getElementById("username")
+                fetch("/api/user/register", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        email: email.value,
+                        password: password.value,
+                        username: username.value
+                    })
+                }).then(async res => {
+                    if (res.status === 200) {
+                        window.open("/", "_self")
+                    } else {
+                        showError("Failed to register try again")
+                    }
+                })
+                .catch(() => showError("Server error try again later."))
+            }
+        </script>
+    <% } %>
+    <script>
+        document.getElementById("action").addEventListener("click", action)
+    </script>
+</html>

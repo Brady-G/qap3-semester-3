@@ -1,0 +1,44 @@
+<html lang="en">
+    <%- include('./partials/head.ejs') %>
+    <%- include('./partials/auth.ejs') %>
+    <body>
+        <%- include('./partials/nav.ejs') %>
+        <div>
+            <h3>Welcome Back, <span id="username">Unknown</span></h3>
+            <div>
+                <h5>Change Password</h5>
+                <input id="password" placeholder="Password" type="password">
+                <button id="action">Change Password</button>
+                <p id="error" class="error"></p>
+            </div>
+        </div>
+    </body>
+    <script>
+        const user = getUser();
+        document.getElementById("username").textContent = user?.name || "Unknown";
+        const errorText = document.getElementById("error")
+
+        //Run password change request and if successful removing the token and having the user relogin
+        document.getElementById("action").addEventListener("click", () => {
+            sendRequest("/api/user/password", {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    password: document.getElementById("password").value
+                })
+            }).then(res => {
+                if (res.status === 200) {
+                    localStorage.removeItem("token")
+                    window.open("/", "_self")
+                } else {
+                    errorText.innerText = "Failed to change password\ntry again later."
+                }
+            }).catch(() => {
+                errorText.innerText = "Internal server error changing password\ntry again later."
+            })
+
+        })
+    </script>
+</html>

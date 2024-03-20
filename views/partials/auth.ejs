@@ -1,0 +1,20 @@
+<script>
+    // Sends a request to a specified path with options but automatically includes the token
+    // for the currently logged in user
+    const sendRequest = (path, options) => {
+        return fetch(path, {
+            ...options,
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem("token")}`,
+                ...options.headers
+            }
+        })
+    }
+
+    // Gets the information from the current users token
+    const getUser = () => {
+        const token = localStorage.getItem("token");
+        const dataBase64 = token.split(".")[1];
+        return JSON.parse(atob(dataBase64))
+    }
+</script>

@@ -1,7 +1,7 @@
 const express = require("express");
 require('dotenv').config()
 const {checkAndRun} = require("./apiutils");
-const {getProject, deleteProject, createProject, updateProject} = require("../../services/projects.dal");
+const {getProject, deleteProject, createProject, updateProject, getUserProjects} = require("../../services/projects.dal");
 const {getUserById} = require("../../services/users.dal");
 const router = express.Router();
 
@@ -36,6 +36,12 @@ router.delete("/:id", express.json(), (req, res) => {
             .catch(() => res.sendStatus(500))
     }
 });
+
+router.get("/", (req, res) => {
+    getUserProjects(req.user?.id)
+        .then(projects => res.status(200).json(projects))
+        .catch(() => res.sendStatus(500))
+})
 
 router.post("/", express.json(), (req, res) => {
     const name = req.body.name;
