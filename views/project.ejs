@@ -1,0 +1,21 @@
+<html lang="en">
+    <%- include('./partials/head.ejs') %>
+    <%- include('./partials/auth.ejs') %>
+    <body>
+        <%- include('./partials/nav.ejs') %>
+        <div>
+            <h1><%=project.name%></h1>
+            <h5>by <i><%=user%></i></h5>
+            <a id="edit-button" href="/projects/<%=project.id%>/edit" class="hidden">
+                <button>Edit</button>
+            </a>
+        </div>
+    </body>
+<script>
+    const id = Number.parseInt("<%=project.user%>")
+    const user = getUser()
+    if (id === user.id) {
+        document.getElementById("edit-button").classList.remove("hidden")
+    }
+</script>
+</html>

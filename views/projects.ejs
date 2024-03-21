@@ -1,0 +1,20 @@
+<html lang="en">
+    <%- include('./partials/head.ejs') %>
+    <body>
+        <%- include('./partials/nav.ejs') %>
+        <table>
+            <th>
+                Projects
+            </th>
+            <% if (projects.length > 0) { %>
+                <% projects.forEach(project => { %>
+                    <tr>
+                        <td>
+                            <a href="/projects/<%=project.id%>"><%=project.name%></a>
+                        </td>
+                    </tr>
+                <% }) %>
+            <% } %>
+        </table>
+    </body>
+</html>

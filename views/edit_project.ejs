@@ -1,0 +1,43 @@
+<html lang="en">
+    <%- include('./partials/head.ejs') %>
+    <%- include('./partials/auth.ejs') %>
+    <body>
+        <%- include('./partials/nav.ejs') %>
+        <div>
+            <h1 id="display-name"><%=project.name%></h1>
+            <h5>by <i><%=user%></i></h5>
+            <hr>
+            <h5>Edit Name:</h5>
+            <input id="name" type="text" placeholder="New Name">
+            <button id="action">Change Name</button>
+            <p id="error" class="error"></p>
+        </div>
+    </body>
+<script>
+    const name = document.getElementById("name");
+    const id = Number.parseInt("<%=project.id%>")
+    const user = getUser();
+
+    document.getElementById("action").addEventListener("click", () => {
+        sendRequest("/api/projects", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name: name.value,
+                id: id,
+                user: user.id
+            })
+        }).then(res => {
+            if (res.status === 204) {
+                document.getElementById("display-name").textContent = name.value;
+            } else {
+                document.getElementById("error").textContent = "Failed try again later."
+            }
+        }).catch(() => {
+            document.getElementById("error").textContent = "Internal Server Error. Try again later."
+        })
+    })
+</script>
+</html>

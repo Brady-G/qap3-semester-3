@@ -21,6 +21,8 @@ const ejsRoute = (name) => app.get(`/${name}`, (req, res) => {
 ejsRoute("home")
 ejsRoute("account")
 
+app.use("/projects", require("./routes/projects"))
+
 app.listen(3000, () => {
     console.log("Sever listening on port 3000")
 });
