@@ -15,3 +15,6 @@ JWT_SECRET="supersecretpassword"
 
 They all are required the first 4 are for connections to the database and are specific to your system.
 The last 1 is the secret to use for encrypting the JWTs that are sent to users as part of authentication.
+
+---
+All required database setup are in the /services/DAL folder and are named create_* these need to be ran database -> users -> projects in order to have the correct dependency order.
